@@ -47,6 +47,7 @@ class PushExpressManager {
     } else {
       createAppInstance(
         transportType: transportType,
+        transportToken: transportToken,
         id: _icId,
       );
     }
@@ -55,6 +56,7 @@ class PushExpressManager {
   // App instance creation
   Future<void> createAppInstance({
     required TransportType transportType,
+    required String transportToken,
     String? id,
   }) async {
     _icId = id ?? generateUniqueId();
@@ -67,6 +69,12 @@ class PushExpressManager {
 
     if (response.error == false) {
       saveNotificationToken(response.data['id']);
+      updateAppInstance(
+        transportType: transportType,
+        id: id,
+        transportToken: transportToken,
+        shouldRetry: true,
+      );
     } else {
       print('Failed to create app instance: ${response.error}');
     }
