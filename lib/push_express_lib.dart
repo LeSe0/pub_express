@@ -41,7 +41,7 @@ class PushExpressManager {
     if (_icId != null) {
       updateAppInstance(
         transportType: transportType,
-        id: _icId,
+        id: extId,
         transportToken: transportToken,
       );
     } else {

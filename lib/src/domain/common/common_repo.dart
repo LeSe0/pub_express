@@ -39,7 +39,7 @@ class CommonRepo implements ICommonRepo {
     String? extId,
   }) async {
     var params = {
-      "transport_type": transportType.name,
+      "transport_type": transportType.value,
       "transport_token": transportToken,
       "platform_type": LocaleInfo.getPlatformName(),
       "platform_name": LocaleInfo.getPlatformName(),
