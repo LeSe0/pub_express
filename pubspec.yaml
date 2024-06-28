@@ -1,6 +1,6 @@
 name: push_express_lib
 description: "A Flutter package for connecting Firebase Cloud Messaging (FCM) with Push Express website."
-version: 0.0.2
+version: 0.0.3
 repository: https://github.com/LeSe0/pub_express.git
 
 environment:
