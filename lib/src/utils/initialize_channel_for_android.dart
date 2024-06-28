@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:push_express_lib/notification_manager.dart';
 
@@ -9,7 +7,6 @@ const channelDescription = "This channel is used for important notifications.";
 
 @pragma('vm:entry-point')
 void handleNotificationPressed(NotificationResponse? message) {
-  inspect(message);
   NotificationManager().handleNotificationPressed(message);
 }
 
