@@ -77,13 +77,14 @@ class PushExpressManager {
     required TransportType transportType,
     required String transportToken,
     String? id,
+    bool? shouldRetry = true,
   }) async {
     try {
       final response = await commonRepo.updateAppInstance(
         appId: _appId!,
         transportType: transportType,
         icId: _icId!,
-        extId: id ?? generateUniqueId(),
+        extId: id,
         transportToken: transportToken,
       );
 
@@ -98,12 +99,14 @@ class PushExpressManager {
         print('Failed to update app instance: ${response.data}');
       }
     } catch (e) {
-      print('Error updating app instance: $e');
-      retryUpdateAppInstance(
-        transportType: transportType,
-        id: id,
-        transportToken: transportToken,
-      );
+      if (shouldRetry == true) {
+        // print('Error updating app instance: $e');
+        retryUpdateAppInstance(
+          transportType: transportType,
+          id: id,
+          transportToken: transportToken,
+        );
+      }
     }
   }
 
@@ -120,6 +123,7 @@ class PushExpressManager {
           transportType: transportType,
           transportToken: transportToken,
           id: id,
+          shouldRetry: false,
         );
         return;
       } catch (e) {
@@ -163,7 +167,7 @@ class PushExpressManager {
       );
 
       if (response.error == false) {
-        print('Notification event sent: ${response.data}');
+        print('Notification event sent: ${event.name}');
       } else {
         print('Failed to send notification event: ${response.error}');
       }
