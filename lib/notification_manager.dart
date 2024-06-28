@@ -114,7 +114,10 @@ class NotificationManager {
   }
 
   NotificationDetails _getNotificationDetailsForNotificationWithImage(
-      String imagePath, String? icon, bool shouldShowInForeground) {
+    String imagePath,
+    String? icon,
+    bool shouldShowInForeground,
+  ) {
     // picture information
     final BigPictureStyleInformation bigPictureStyleInformation =
         BigPictureStyleInformation(
