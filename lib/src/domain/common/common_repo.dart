@@ -36,16 +36,16 @@ class CommonRepo implements ICommonRepo {
     required TransportType transportType,
     required String transportToken,
     required String icId,
-    required String extId,
+    String? extId,
   }) async {
-    final params = {
+    var params = {
       "transport_type": transportType.name,
       "transport_token": transportToken,
       "platform_type": LocaleInfo.getPlatformName(),
       "platform_name": LocaleInfo.getPlatformName(),
-      "ext_id": extId,
       "lang": LocaleInfo.getCurrentLanguage(),
       "county": LocaleInfo.getCurrentCountry(),
+      if (extId != null) "ext_id": extId,
       "tz_sec": LocaleInfo.getTimeZoneOffsetInSeconds()
     };
 

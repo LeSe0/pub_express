@@ -12,7 +12,7 @@ abstract class ICommonRepo {
     required TransportType transportType,
     required String transportToken,
     required String icId,
-    required String extId,
+    required String? extId,
   });
   Future<ResponseModel> sendNotificationEvent({
     required String msgId,
