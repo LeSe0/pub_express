@@ -1,3 +1,4 @@
-## 0.0.1
+## 0.0.3
 
-* TODO: Describe initial release.
+fix: update instance after creation
+fix: don't send extId as icId
