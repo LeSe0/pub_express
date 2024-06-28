@@ -1,10 +1,10 @@
 name: push_express_lib
-description: "A new Flutter package project."
+description: "A Flutter package for connecting Firebase Cloud Messaging (FCM) with Push Express website. It allows you to send notifications and get analytics for them, including information about clicks and delivered notifications."
 version: 0.0.1
-homepage:
+repository: https://github.com/LeSe0/pub_express.git
 
 environment:
-  sdk: '>=3.3.3 <4.0.0'
+  sdk: ">=3.3.3 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
@@ -24,12 +24,7 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^3.0.0
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
 flutter:
-
   # To add assets to your package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
