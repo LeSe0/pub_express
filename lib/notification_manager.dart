@@ -54,7 +54,7 @@ class NotificationManager {
     }
   }
 
-  Future<void> handleNotificationPressed(int? id) async {
+  Future<void> handleNotificationPressed(String? id) async {
     if (id != null) {
       // Send the delivered event to PushExpressManager
       PushExpressManager().sendNotificationEvent(

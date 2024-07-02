@@ -11,6 +11,13 @@ import 'package:push_express_lib/src/utils/foreground_service_token.dart';
 import 'package:push_express_lib/src/utils/generate_unique_id.dart';
 import 'package:push_express_lib/src/utils/notification_token.dart';
 
+@pragma('vm:entry-point')
+void _handleNotificationPressed(NotificationResponse? message) {
+  NotificationManager().handleNotificationPressed(
+    message?.payload?.toString() ?? "",
+  );
+}
+
 class PushExpressManager {
   static final PushExpressManager _instance = PushExpressManager._internal();
   final ICommonRepo commonRepo = CommonRepo();
@@ -34,16 +41,12 @@ class PushExpressManager {
 
     FlutterLocalNotificationsPlugin().initialize(
       const InitializationSettings(
-        android: AndroidInitializationSettings('app_icon'),
+        android: AndroidInitializationSettings(
+          'mipmap/ic_launcher',
+        ),
       ),
-      onDidReceiveNotificationResponse: (rsp) =>
-          NotificationManager().handleNotificationPressed(
-        int.parse(rsp.payload!),
-      ),
-      onDidReceiveBackgroundNotificationResponse: (rsp) =>
-          NotificationManager().handleNotificationPressed(
-        int.parse(rsp.payload!),
-      ),
+      onDidReceiveNotificationResponse: _handleNotificationPressed,
+      onDidReceiveBackgroundNotificationResponse: _handleNotificationPressed,
     );
 
     // save foreground service
