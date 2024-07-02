@@ -2,7 +2,9 @@ library push_express_lib;
 
 import 'dart:async';
 
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:push_express_lib/enums/common.dart';
+import 'package:push_express_lib/notification_manager.dart';
 import 'package:push_express_lib/src/domain/common/common_repo.dart';
 import 'package:push_express_lib/src/domain/common/icommon_repo.dart';
 import 'package:push_express_lib/src/utils/foreground_service_token.dart';
@@ -29,6 +31,20 @@ class PushExpressManager {
   }) async {
     _appId = appId;
     _icId = await getNotificationToken();
+
+    FlutterLocalNotificationsPlugin().initialize(
+      const InitializationSettings(
+        android: AndroidInitializationSettings('app_icon'),
+      ),
+      onDidReceiveNotificationResponse: (rsp) =>
+          NotificationManager().handleNotificationPressed(
+        int.parse(rsp.payload!),
+      ),
+      onDidReceiveBackgroundNotificationResponse: (rsp) =>
+          NotificationManager().handleNotificationPressed(
+        int.parse(rsp.payload!),
+      ),
+    );
 
     // save foreground service
     saveForegroundServiceToken(foreground);
