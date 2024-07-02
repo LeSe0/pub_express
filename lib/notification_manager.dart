@@ -54,13 +54,11 @@ class NotificationManager {
     }
   }
 
-  Future<void> handleNotificationPressed(NotificationResponse? message) async {
-    if (message != null) {
-      String msgId = message.payload ?? '';
-
+  Future<void> handleNotificationPressed(int? id) async {
+    if (id != null) {
       // Send the delivered event to PushExpressManager
       PushExpressManager().sendNotificationEvent(
-        msgId,
+        id.toString(),
         Events.clicked,
       );
     }
