@@ -7,7 +7,6 @@ import 'package:push_express_lib/src/domain/common/common_repo.dart';
 import 'package:push_express_lib/src/domain/common/icommon_repo.dart';
 import 'package:push_express_lib/src/utils/foreground_service_token.dart';
 import 'package:push_express_lib/src/utils/generate_unique_id.dart';
-import 'package:push_express_lib/src/utils/initialize_channel_for_android.dart';
 import 'package:push_express_lib/src/utils/notification_token.dart';
 
 class PushExpressManager {
@@ -30,9 +29,6 @@ class PushExpressManager {
   }) async {
     _appId = appId;
     _icId = await getNotificationToken();
-
-    // Initialize channel for android
-    initializeChannelForAndroid();
 
     // save foreground service
     saveForegroundServiceToken(foreground);

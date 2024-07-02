@@ -6,7 +6,10 @@ import 'package:dio/dio.dart';
 import 'package:push_express_lib/enums/common.dart';
 import 'package:push_express_lib/push_express_lib.dart';
 import 'package:push_express_lib/src/utils/foreground_service_token.dart';
-import 'package:push_express_lib/src/utils/initialize_channel_for_android.dart';
+
+const channelId = "high_importance_channel";
+const channelName = "High Importance Notifications";
+const channelDescription = "This channel is used for important notifications.";
 
 class NotificationManager {
   NotificationManager();
@@ -98,16 +101,9 @@ class NotificationManager {
       icon: icon,
     );
 
-    // iOS notification settings
-    DarwinNotificationDetails iOSPlatformChannelSpecifics =
-        DarwinNotificationDetails(
-      presentAlert: shouldShowInForeground,
-    );
-
     // specify the channel for android
     NotificationDetails platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,
-      iOS: iOSPlatformChannelSpecifics,
     );
 
     return platformChannelSpecifics;
@@ -139,19 +135,9 @@ class NotificationManager {
       icon: icon,
     );
 
-    // iOS notification settings
-    DarwinNotificationDetails iOSPlatformChannelSpecifics =
-        DarwinNotificationDetails(
-      presentAlert: shouldShowInForeground,
-      attachments: [
-        DarwinNotificationAttachment(imagePath),
-      ],
-    );
-
     // specify the channel for android
     NotificationDetails platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,
-      iOS: iOSPlatformChannelSpecifics,
     );
 
     return platformChannelSpecifics;
@@ -165,29 +151,31 @@ class NotificationManager {
     String? image,
   }) async {
     bool shouldShowInForeground = await getForegroundServiceToken() ?? false;
-    NotificationDetails? platformChannelSpecifics;
+    if (Platform.isAndroid && shouldShowInForeground) {
+      NotificationDetails? platformChannelSpecifics;
 
-    if (image != null) {
-      platformChannelSpecifics =
-          _getNotificationDetailsForNotificationWithImage(
-        image,
-        icon,
-        shouldShowInForeground,
-      );
-    } else {
-      platformChannelSpecifics =
-          _getNotificationDetailsForNotificationWithoutImage(
-        icon,
-        shouldShowInForeground,
+      if (image != null) {
+        platformChannelSpecifics =
+            _getNotificationDetailsForNotificationWithImage(
+          image,
+          icon,
+          shouldShowInForeground,
+        );
+      } else {
+        platformChannelSpecifics =
+            _getNotificationDetailsForNotificationWithoutImage(
+          icon,
+          shouldShowInForeground,
+        );
+      }
+
+      await FlutterLocalNotificationsPlugin().show(
+        id.hashCode,
+        title,
+        body,
+        platformChannelSpecifics,
+        payload: id,
       );
     }
-
-    await FlutterLocalNotificationsPlugin().show(
-      id.hashCode,
-      title,
-      body,
-      platformChannelSpecifics,
-      payload: id,
-    );
   }
 }
